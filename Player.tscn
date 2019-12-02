@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://assets/Colors.material" type="Material" id=1]
 [ext_resource path="res://assets/Emission.material" type="Material" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://assets/Gun_Emission.material" type="Material" id=6]
 [ext_resource path="res://assets/32-32_white.png" type="Texture" id=7]
 [ext_resource path="res://assets/Titillium-Regular.otf" type="DynamicFontData" id=8]
+[ext_resource path="res://Player.gd" type="Script" id=9]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 1.2
@@ -3914,6 +3915,7 @@ use_filter = true
 font_data = ExtResource( 8 )
 
 [node name="Player" type="KinematicBody"]
+script = ExtResource( 9 )
 
 [node name="Body_CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 5.81098, 0 )
@@ -4185,6 +4187,9 @@ transform = Transform( 1, 0, 0, 0, 0.983001, 0.1836, 0, -0.1836, 0.983001, 0, -0
 [node name="HUD" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Crosshair" type="Control" parent="HUD"]
 modulate = Color( 1, 1, 1, 0.705882 )
