@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://RigidBody_hit_test.gd" type="Script" id=2]
@@ -59,16 +59,15 @@ extents = Vector3( 3, 3, 3 )
 size = Vector3( 6, 6, 6 )
 
 [sub_resource type="SpatialMaterial" id=10]
+
+[sub_resource type="SpatialMaterial" id=11]
 albedo_color = Color( 0.536256, 0.0622101, 0.589844, 1 )
 
-[sub_resource type="PhysicsMaterial" id=11]
+[sub_resource type="PhysicsMaterial" id=12]
 bounce = 0.6
 
-[sub_resource type="SpatialMaterial" id=12]
+[sub_resource type="SpatialMaterial" id=13]
 albedo_color = Color( 0.140531, 0.589844, 0.0622101, 1 )
-
-[sub_resource type="PhysicsMaterial" id=13]
-bounce = 0.6
 
 [sub_resource type="PhysicsMaterial" id=14]
 bounce = 0.6
@@ -81,6 +80,27 @@ bounce = 0.6
 
 [sub_resource type="PhysicsMaterial" id=17]
 bounce = 0.6
+
+[sub_resource type="PhysicsMaterial" id=18]
+bounce = 0.6
+
+[sub_resource type="Shader" id=19]
+code = "shader_type canvas_item;
+
+uniform float size_x = 0.008;
+uniform float size_y = 0.008;
+
+void fragment() {
+	vec2 uv = SCREEN_UV;
+	uv -= mod(uv, vec2(size_x, size_y));
+	
+	COLOR.rgb = textureLod(SCREEN_TEXTURE, uv, 0.0).rgb;
+}"
+
+[sub_resource type="ShaderMaterial" id=20]
+shader = SubResource( 19 )
+shader_param/size_x = 0.01
+shader_param/size_y = 0.01
 
 [node name="Testing_Area" type="Spatial"]
 
@@ -192,7 +212,7 @@ shape = SubResource( 8 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Cubes/PurpleCube2"]
 mesh = SubResource( 9 )
-material/0 = SubResource( 10 )
+material/0 = SubResource( 11 )
 
 [node name="PurpleCube3" type="RigidBody" parent="Cubes"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -7.85143, 9.95316, 23.1277 )
@@ -205,7 +225,7 @@ shape = SubResource( 8 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Cubes/PurpleCube3"]
 mesh = SubResource( 9 )
-material/0 = SubResource( 10 )
+material/0 = SubResource( 11 )
 
 [node name="PurpleCube4" type="RigidBody" parent="Cubes"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -7.85143, 17.1576, 23.1277 )
@@ -218,7 +238,7 @@ shape = SubResource( 8 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Cubes/PurpleCube4"]
 mesh = SubResource( 9 )
-material/0 = SubResource( 10 )
+material/0 = SubResource( 11 )
 
 [node name="PurpleCube5" type="RigidBody" parent="Cubes"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -7.85143, 24.1593, 23.1277 )
@@ -231,7 +251,7 @@ shape = SubResource( 8 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Cubes/PurpleCube5"]
 mesh = SubResource( 9 )
-material/0 = SubResource( 10 )
+material/0 = SubResource( 11 )
 
 [node name="PurpleCube6" type="RigidBody" parent="Cubes"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.451504, 17.9137, 23.1277 )
@@ -244,12 +264,12 @@ shape = SubResource( 8 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Cubes/PurpleCube6"]
 mesh = SubResource( 9 )
-material/0 = SubResource( 10 )
+material/0 = SubResource( 11 )
 
 [node name="GreenCube" type="RigidBody" parent="Cubes"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.95316, -21.6551 )
 mass = 5.0
-physics_material_override = SubResource( 11 )
+physics_material_override = SubResource( 12 )
 gravity_scale = 3.0
 script = ExtResource( 2 )
 
@@ -258,12 +278,12 @@ shape = SubResource( 8 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Cubes/GreenCube"]
 mesh = SubResource( 9 )
-material/0 = SubResource( 12 )
+material/0 = SubResource( 13 )
 
 [node name="GreenCube2" type="RigidBody" parent="Cubes"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.79916, 9.95316, -21.6551 )
 mass = 5.0
-physics_material_override = SubResource( 13 )
+physics_material_override = SubResource( 14 )
 script = ExtResource( 2 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Cubes/GreenCube2"]
@@ -271,12 +291,12 @@ shape = SubResource( 8 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Cubes/GreenCube2"]
 mesh = SubResource( 9 )
-material/0 = SubResource( 12 )
+material/0 = SubResource( 13 )
 
 [node name="GreenCube3" type="RigidBody" parent="Cubes"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.58552, 9.95316, -21.6551 )
 mass = 5.0
-physics_material_override = SubResource( 14 )
+physics_material_override = SubResource( 15 )
 gravity_scale = 3.0
 script = ExtResource( 2 )
 
@@ -285,12 +305,12 @@ shape = SubResource( 8 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Cubes/GreenCube3"]
 mesh = SubResource( 9 )
-material/0 = SubResource( 12 )
+material/0 = SubResource( 13 )
 
 [node name="GreenCube4" type="RigidBody" parent="Cubes"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.79556, 17.3734, -21.6551 )
 mass = 5.0
-physics_material_override = SubResource( 15 )
+physics_material_override = SubResource( 16 )
 gravity_scale = 3.0
 script = ExtResource( 2 )
 
@@ -299,12 +319,12 @@ shape = SubResource( 8 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Cubes/GreenCube4"]
 mesh = SubResource( 9 )
-material/0 = SubResource( 12 )
+material/0 = SubResource( 13 )
 
 [node name="GreenCube5" type="RigidBody" parent="Cubes"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.51582, 17.3734, -21.6551 )
 mass = 5.0
-physics_material_override = SubResource( 16 )
+physics_material_override = SubResource( 17 )
 gravity_scale = 3.0
 script = ExtResource( 2 )
 
@@ -313,12 +333,12 @@ shape = SubResource( 8 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Cubes/GreenCube5"]
 mesh = SubResource( 9 )
-material/0 = SubResource( 12 )
+material/0 = SubResource( 13 )
 
 [node name="GreenCube6" type="RigidBody" parent="Cubes"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.602769, 24.9266, -21.6551 )
 mass = 3.0
-physics_material_override = SubResource( 17 )
+physics_material_override = SubResource( 18 )
 gravity_scale = 3.0
 script = ExtResource( 2 )
 
@@ -327,4 +347,13 @@ shape = SubResource( 8 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Cubes/GreenCube6"]
 mesh = SubResource( 9 )
-material/0 = SubResource( 12 )
+material/0 = SubResource( 13 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+material = SubResource( 20 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}

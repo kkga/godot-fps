@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://assets/GunMaterial.material" type="Material" id=1]
 [ext_resource path="res://Bullet.gd" type="Script" id=2]
+[ext_resource path="res://psx_lit_reflection.shader" type="Shader" id=3]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 0.03, 0.03, 0.23 )
@@ -22,6 +23,16 @@ surfaces/0 = {
 "vertex_count": 232
 }
 
+[sub_resource type="ShaderMaterial" id=3]
+shader = ExtResource( 3 )
+shader_param/color = null
+shader_param/reflection_intensity = null
+shader_param/specular_intensity = null
+shader_param/resolution = 256.0
+shader_param/cull_distance = 5.0
+shader_param/uv_scale = Vector2( 1, 1 )
+shader_param/uv_offset = Vector2( 0, 0 )
+
 [node name="Bullet" type="Spatial"]
 script = ExtResource( 2 )
 
@@ -35,4 +46,4 @@ shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
 mesh = SubResource( 2 )
-material/0 = ExtResource( 1 )
+material/0 = SubResource( 3 )
